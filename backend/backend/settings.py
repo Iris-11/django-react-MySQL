@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,8 +80,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'),        # Replace with your database name
+        'USER': config('DB_USER'),        # Replace with your database user
+        'PASSWORD': config('DB_PASSWORD'),# Replace with your database password
+        'HOST': config('DB_HOST', default='localhost'),  # Set to the database host, e.g., 'localhost' or an IP address
+        'PORT': config('DB_PORT', default='3306'), # Default MySQL port          
+                      
     }
 }
 
@@ -131,3 +137,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
